@@ -16,6 +16,7 @@ def _read_data():
     print("Reading data from data.json")
     data_file = open("data.json", "r")
     data = json.load(data_file)
+    data_file.close()
     return data
 
 
@@ -32,7 +33,7 @@ def _create_rabbitmq_channel():
     )
     channel = connection.channel()
     channel.queue_declare(queue=rabbitmq_channel)
-    return channel
+    return channel, connection
 
 
 def _send_to_queue(channel, data):
@@ -42,7 +43,7 @@ def _send_to_queue(channel, data):
 
 def main():
     data = _read_data()
-    channel = _create_rabbitmq_channel()
+    channel, connection = _create_rabbitmq_channel()
 
     while True:
         time.sleep(5)
@@ -51,6 +52,7 @@ def main():
             _send_to_queue(channel, random_chosen_data)
         except Exception as e:
             print(f"Failed to send data to queue: {e}")
+            connection.close()
             break
 
 
