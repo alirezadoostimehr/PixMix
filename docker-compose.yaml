@@ -1,0 +1,25 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: pix_mix_rabbitmq
+    volumes:
+      - pix_mix_rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+
+  qdrant:
+    image: qdrant/qdrant:v1.12.0
+    container_name: pix_mix_qdrant
+    volumes:
+      - pix_mix_qdrant_data:/qdrant/storage
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+
+volumes:
+  pix_mix_qdrant_data:
+  pix_mix_rabbitmq_data:
