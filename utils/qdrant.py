@@ -6,7 +6,7 @@ from qdrant_client.http.models import VectorParams, Distance
 
 QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 QDRANT_COLLECTION_NAME = os.getenv("QDRANT_COLLECTION_NAME", "default")
-QDRANT_IMAGE_COUNT = os.getenv("QDRANT_IMAGE_COUNT", 5)
+QDRANT_IMAGE_COUNT = int(os.getenv("QDRANT_IMAGE_COUNT", 5))
 
 
 client = QdrantClient(QDRANT_URL)
