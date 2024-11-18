@@ -14,7 +14,7 @@ model, preprocess = clip.load(model_path, device=device)
 
 def _normalize_and_flatten(features):
     features /= features.norm(dim=-1, keepdim=True)
-    result = features.cpu().numpy().flatten().tolist()
+    result = features.cpu().detach().numpy().flatten().tolist()
     return result
 
 
